@@ -1,0 +1,19 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": ["Hi", "Hello", "Hey", "Good morning", "Anyone there?"],
+      "responses": ["Hello! How can I help you?", "Hi there!", "Welcome to AI chatbox web!"]
+    },
+    {
+      "tag": "creator",
+      "patterns": ["Who made you?", "Who is your creator?", "Who is Praveen?"],
+      "responses": ["I was created by Praveen!", "Praveen built me using Python and Flask."]
+    },
+    {
+      "tag": "movies",
+      "patterns": ["Tell me a movie", "Do you like Tamil movies?", "Suggest a film"],
+      "responses": ["I love Tamil movies! Have you seen 'Leo' or 'Jailer'?", "Movies are great. I recommend 'Vikram'."]
+    }
+  ]
+}

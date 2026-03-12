@@ -1,0 +1,91 @@
+:root {
+    --bg: #0d1117;
+    --sidebar-bg: #161b22;
+    --accent: #58a6ff;
+    --text-main: #c9d1d9;
+    --card-bg: #21262d;
+    --border: #30363d;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    display: flex; /* This aligns sidebar and main content side-by-side */
+    font-family: 'Inter', -apple-system, sans-serif;
+    background-color: var(--bg);
+    color: var(--text-main);
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 260px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
+.logo { font-size: 24px; font-weight: 800; margin-bottom: 50px; letter-spacing: -1px; }
+.logo span { color: var(--accent); }
+
+.menu-items div {
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.menu-items div:hover, .menu-items .active {
+    background: #21262d;
+    color: var(--accent);
+}
+
+/* MAIN DASHBOARD */
+.main-content {
+    flex: 1;
+    padding: 40px;
+    max-width: 1200px;
+}
+
+.top-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+}
+
+/* FLOATING AI ICON */
+#chat-icon {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--accent);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    z-index: 1000;
+}

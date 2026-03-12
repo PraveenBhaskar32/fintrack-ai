@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinTrack AI | Wealth Advisor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        /* This ensures the chatbox is ALWAYS on top and positioned correctly */
+        #chat-container {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 380px;
+            height: 550px;
+            background: #161b22;
+            border-radius: 16px;
+            border: 1px solid #30363d;
+            display: none; /* Controlled by JS */
+            flex-direction: column;
+            z-index: 9999; /* Higher than everything else */
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+        }
+        #chat-icon {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #58a6ff;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10000;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="logo">FT<span>AI</span></div>
+        <div class="menu-items">
+            <div class="active"><i class="fa-solid fa-house"></i> Home</div>
+            <div><i class="fa-solid fa-chart-line"></i> Markets</div>
+            <div><i class="fa-solid fa-gear"></i> Settings</div>
+        </div>
+        <div class="user-profile">
+            <img src="https://ui-avatars.com/api/?name=Praveen&background=00d2ff&color=fff" alt="User">
+            <span>Praveen</span>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <nav class="top-nav">
+            <h2>Market Overview</h2>
+            <button class="upgrade-btn">Upgrade to Pro</button>
+        </nav>
+        <div class="dashboard-grid">
+            <div class="stat-card">Nifty 50 <br> <h3>22,450.20</h3></div>
+            <div class="stat-card">Gold <br> <h3>₹65,400</h3></div>
+            <div class="stat-card">Bitcoin <br> <h3>$72,120</h3></div>
+        </div>
+    </div>
+
+    <div id="chat-icon" onclick="toggleChat()">
+        <i class="fa-solid fa-robot"></i>
+    </div>
+
+    <div id="chat-container">
+        <div id="chat-header" style="background: #1f2937; padding: 15px; display: flex; justify-content: space-between;">
+            <span>FinTrack AI Agent</span>
+            <i class="fa-solid fa-xmark" onclick="toggleChat()" style="cursor:pointer"></i>
+        </div>
+        <div id="chat-messages" style="flex:1; padding: 15px; overflow-y: auto;"></div>
+        <div id="input-area" style="padding:15px; display:flex; gap:10px;">
+            <input type="text" id="user-input" style="flex:1; padding:10px; border-radius:8px; border:none; background:#0d1117; color:white;" placeholder="Type here...">
+            <button onclick="sendMessage()" style="background:#58a6ff; border:none; padding:10px; border-radius:8px; cursor:pointer;"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script>
+        function toggleChat() {
+            const chat = document.getElementById('chat-container');
+            // If it's hidden or has no display style, show it
+            if (chat.style.display === "none" || chat.style.display === "") {
+                chat.style.display = "flex";
+                console.log("Chat Opened");
+            } else {
+                chat.style.display = "none";
+                console.log("Chat Closed");
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('user-input');
+            const messages = document.getElementById('chat-messages');
+            const text = input.value.trim();
+            if (!text) return;
+
+            messages.innerHTML += `<div style="text-align:right; margin-bottom:10px;"><b>You:</b> ${text}</div>`;
+            input.value = '';
+
+            const response = await fetch('/ask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text })
+            });
+            const data = await response.json();
+            messages.innerHTML += `<div style="text-align:left; margin-bottom:10px;"><b>AI:</b> ${data.reply}</div>`;
+            messages.scrollTop = messages.scrollHeight;
+        }
+    </script>
+</body>
+</html>
